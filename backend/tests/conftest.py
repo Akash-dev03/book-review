@@ -11,8 +11,7 @@ from app.models import book, review  # Ensure models are registered
 
 # ✅ Use appropriate PostgreSQL URL
 SQLALCHEMY_DATABASE_URL = (
-    "postgresql://neondb_owner:npg_b8T5GoVgWLYw@ep-still-cake-a1huop8e-pooler.ap-southeast-1.aws.neon.tech/"
-    "neondb?sslmode=require&channel_binding=require"
+    "test_database_url"
 )
 
 # ✅ Correct engine config for PostgreSQL (no SQLite-specific settings)
