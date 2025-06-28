@@ -150,7 +150,7 @@ This project was developed as part of a backend development assessment.
 
 Developed by **Akash**
 
-📧 Email: \[[a03akash@gmail.com](mailto:a03akash@gmail.com)]
+📧 Email: [a03akash@gmail.com](mailto:a03akash@gmail.com)
 
 🔗 GitHub: [github.com/Akash-dev03](https://github.com/Akash-dev03)
 
