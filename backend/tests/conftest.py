@@ -3,26 +3,24 @@ import asyncio
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import StaticPool
 
 from app.main import app
 from app.database import get_db, Base
 from app.cache import init_cache
-from app.models.book import Book
-from app.models.review import Review
+from app.models import book, review  # Ensure models are registered
 
-# Test database URL
-SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
-
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL,
-    connect_args={"check_same_thread": False},
-    poolclass=StaticPool,
+# ✅ Use appropriate PostgreSQL URL
+SQLALCHEMY_DATABASE_URL = (
+    "postgresql://neondb_owner:npg_b8T5GoVgWLYw@ep-still-cake-a1huop8e-pooler.ap-southeast-1.aws.neon.tech/"
+    "neondb?sslmode=require&channel_binding=require"
 )
+
+# ✅ Correct engine config for PostgreSQL (no SQLite-specific settings)
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-
+# ✅ Dependency override
 def override_get_db():
     try:
         db = TestingSessionLocal()
@@ -34,23 +32,18 @@ def override_get_db():
 app.dependency_overrides[get_db] = override_get_db
 
 
-@pytest.fixture(scope="session")
-def event_loop():
-    """Create an instance of the default event loop for the test session."""
-    loop = asyncio.get_event_loop_policy().new_event_loop()
-    yield loop
-    loop.close()
-
-
+# ✅ Sync fixture since TestClient is sync
 @pytest.fixture(scope="function")
-async def client():
+def client():
     """Create a test client"""
     Base.metadata.create_all(bind=engine)
-    await init_cache()
-    
+
+    # Run async init_cache inside sync context
+    asyncio.run(init_cache())
+
     with TestClient(app) as test_client:
         yield test_client
-    
+
     Base.metadata.drop_all(bind=engine)
 
 

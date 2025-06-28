@@ -72,7 +72,6 @@ class BookService:
         self.db.commit()
         self.db.refresh(book)
         
-        # Invalidate cache
         await self._invalidate_books_cache()
         
         return book
@@ -92,9 +91,7 @@ class BookService:
     
     async def _invalidate_books_cache(self):
         """Invalidate all books cache entries"""
-        # In a real application, you might want to use cache patterns or tags
-        # For now, we'll delete common cache keys
-        for page in range(1, 10):  # Clear first 10 pages
+        for page in range(1, 10): 
             for per_page in [10, 25, 50, 100]:
                 cache_key = f"books:page:{page}:per_page:{per_page}"
                 await delete_cache(cache_key)
