@@ -149,9 +149,13 @@ This project was developed as part of a backend development assessment.
 ## 📫 Contact
 
 Developed by **Akash**
+
 📧 Email: \[[a03akash@gmail.com](mailto:a03akash@gmail.com)]
+
 🔗 GitHub: [github.com/Akash-dev03](https://github.com/Akash-dev03)
-🔗 Portfolio [akashportfolio] (https://portfolio-akashs-projects-2b49a841.vercel.app/ )
+
+🔗 Portfolio https://portfolio-akashs-projects-2b49a841.vercel.app/
+
 ---
 
 ## 📝 License
